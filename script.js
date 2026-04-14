@@ -35,42 +35,56 @@ async function processarImagem(event) {
     reader.readAsDataURL(event.target.files[0]);
 }
 
-// 3. "Banco de Dados" - Salvar no LocalStorage
+// Substitua a função salvarNoBanco por esta:
 function salvarNoBanco() {
     const nome = document.getElementById('nomeEspecie').value;
     const tipo = document.getElementById('tipoEspecie').value;
     const foto = document.getElementById('preview').src;
 
+    if (!nome || foto.includes('#')) {
+        alert("Por favor, identifique uma imagem antes de salvar.");
+        return;
+    }
+
     const registro = {
         id: Date.now(),
-        nome,
-        tipo,
-        foto
+        nome: nome,
+        tipo: tipo,
+        foto: foto
     };
 
-    bancoDados.push(registro);
-    localStorage.setItem('bioDB', JSON.stringify(bancoDados));
-    
-    renderizarCatalogo();
-    limparFormulario();
+    try {
+        bancoDados.push(registro);
+        localStorage.setItem('bioDB', JSON.stringify(bancoDados));
+        console.log("Salvo com sucesso!");
+        
+        renderizarCatalogo();
+        limparFormulario();
+    } catch (e) {
+        alert("O banco de dados está cheio! Tente usar imagens menores ou limpe o catálogo.");
+        console.error("Erro ao salvar no LocalStorage:", e);
+    }
 }
 
-// 4. Exibir o catálogo na tela
+// Certifique-se de que a função renderizarCatalogo está exatamente assim:
 function renderizarCatalogo() {
     const grid = document.getElementById('gridCatalogo');
+    if (!grid) return; // Segurança caso o elemento não exista
+    
     grid.innerHTML = '';
 
     bancoDados.forEach(item => {
-        grid.innerHTML += `
-            <div class="card">
-                <img src="${item.foto}">
-                <div class="card-info">
-                    <h4>${item.nome}</h4>
-                    <span>${item.tipo === 'Flora' ? '🌿' : '🐾'} ${item.tipo}</span>
-                    <button class="btn-delete" onclick="removerItem(${item.id})">Excluir</button>
-                </div>
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <img src="${item.foto}">
+            <div class="card-info">
+                <h4>${item.nome}</h4>
+                <span>${item.tipo === 'Flora' ? '🌿' : '🐾'} ${item.tipo}</span>
+                <button class="btn-delete" onclick="removerItem(${item.id})">Excluir</button>
             </div>
         `;
+        grid.appendChild(card);
     });
 }
 
