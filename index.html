@@ -14,33 +14,31 @@
         <p>Identificação e Catalogação de Fauna e Flora</p>
     </header>
 
-    <main>
-        <div class="container">
-            <section class="upload-section">
-                <h3>Novo Cadastro</h3>
-                <div class="upload-box">
-                    <input type="file" id="inputFoto" accept="image/*" onchange="processarImagem(event)">
-                    <img id="preview" src="#" alt="Preview" style="display: none;">
-                </div>
-                
-                <div id="statusIA">Aguardando imagem...</div>
+    <main class="container">
+        <section class="upload-section">
+            <h3>Novo Cadastro</h3>
+            <div class="upload-box">
+                <input type="file" id="inputFoto" accept="image/*" onchange="processarImagem(event)">
+                <img id="preview" src="" alt="Preview" style="display: none;">
+            </div>
+            
+            <div id="statusIA">Carregando Inteligência Artificial...</div>
 
-                <div class="form-group">
-                    <input type="text" id="nomeEspecie" placeholder="Nome identificado pela IA...">
-                    <select id="tipoEspecie">
-                        <option value="Flora">Flora</option>
-                        <option value="Fauna">Fauna</option>
-                    </select>
-                    <button id="btnSalvar" onclick="salvarNoBanco()" disabled>Salvar no Catálogo</button>
-                </div>
-            </section>
+            <div class="form-group">
+                <input type="text" id="nomeEspecie" placeholder="Nome identificado pela IA...">
+                <select id="tipoEspecie">
+                    <option value="Flora">Flora</option>
+                    <option value="Fauna">Fauna</option>
+                </select>
+                <button id="btnSalvar" onclick="salvarNoBanco()" disabled>Salvar no Catálogo</button>
+            </div>
+        </section>
 
-            <section class="catalogo-section">
-                <h3>Espécies Catalogadas</h3>
-                <div id="gridCatalogo" class="grid">
-                    </div>
-            </section>
-        </div>
+        <section class="catalogo-section">
+            <h3>Espécies Catalogadas</h3>
+            <div id="gridCatalogo" class="grid">
+                </div>
+        </section>
     </main>
 
     <script src="script.js"></script>
